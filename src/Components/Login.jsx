@@ -1,7 +1,53 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+
+  const location=useLocation();
+  const navigate=useNavigate();
+  const from='/'
+
+  const handleLogin=(event)=>{
+    event.preventDefault();
+    const form=event.target;
+
+    const username=form.username.value;
+    const password=form.password.value;
+     
+    const userInfo={username,password};
+    console.log(userInfo);
+
+    fetch(`http://localhost:5000/get_user/${username}/${password}`)
+    .then(res=>res.json())
+    .then((data) => {
+      if (data.message === 'User not found') {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Sorry, user not found',
+          background: 'orange',
+          color: 'white',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+      } else if (data.message === 'User found') {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'You are logged in Happyyyy',
+          background: 'yellow',
+          color: 'black',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from);
+        form.reset();
+      }
+    });
+  }
+
   return (
     <div>
            <div className="hero min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 bg-base-200">
@@ -11,7 +57,7 @@ const Login = () => {
       <p className="py-6">Add Username, Password voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
     </div>
     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-      <form onSubmit={''} >
+      <form onSubmit={handleLogin} >
       <div className="card-body">
       <div className="form-control">
           <label className="label">

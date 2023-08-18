@@ -1,6 +1,66 @@
 import React from 'react'
+import Swal from 'sweetalert2';
 
 const Register = () => {
+
+  const handleRegister =(event)=>{
+    event.preventDefault();
+    const form=event.target;
+    const email=form.email.value;
+    const username=form.username.value;
+    const password=form.password.value;
+     
+    const userInfo={email,username,password};
+    console.log(userInfo);
+
+    fetch(`http://localhost:5000/post_user`,{
+      method: "POST",
+      headers:{
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(userInfo)
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.message === 'User already exists') {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Sorry, user already exists',
+          background: 'orange',
+          color: 'white',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+      } 
+    else  if (data.message === 'Username is already taken') {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Sorry, user already exists',
+          background: 'orange',
+          color: 'white',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+      } 
+      else if (data.insertedId) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Your data has been saved',
+          background: 'yellow',
+          color: 'black',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
+      }
+    });
+  }
+
   return (
     <div>
               <div className="hero min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 bg-base-200">
@@ -11,7 +71,7 @@ const Register = () => {
       
     </div>
     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-     <form onSubmit={''} >
+     <form onSubmit={handleRegister} >
      <div className="card-body">
         <div className="form-control">
           <label className="label">
