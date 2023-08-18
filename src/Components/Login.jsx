@@ -18,7 +18,7 @@ const Login = () => {
     const userInfo={username,password};
     console.log(userInfo);
 
-    fetch(`http://localhost:5000/get_user/${username}/${password}`)
+    fetch(`https://kurenai-server-steel.vercel.app/get_user/${username}/${password}`)
     .then(res=>res.json())
     .then((data) => {
       if (data.message === 'User not found') {

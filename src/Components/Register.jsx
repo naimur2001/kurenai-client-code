@@ -13,7 +13,7 @@ const Register = () => {
     const userInfo={email,username,password};
     console.log(userInfo);
 
-    fetch(`http://localhost:5000/post_user`,{
+    fetch(`https://kurenai-server-steel.vercel.app/post_user`,{
       method: "POST",
       headers:{
         'content-type': 'application/json'

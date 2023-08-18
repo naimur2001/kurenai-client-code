@@ -7,12 +7,12 @@ const Dashboard = () => {
   const [users,setUsers]=useState([]);
 
 useEffect(()=>{
-  fetch(`http://localhost:5000/get_blog`)
+  fetch(`https://kurenai-server-steel.vercel.app/get_blog`)
     .then(res=>res.json())
     .then((data) =>setBlogs(data))
 },[])
 useEffect(()=>{
-  fetch(`http://localhost:5000/get_user`)
+  fetch(`https://kurenai-server-steel.vercel.app/get_user`)
     .then(res=>res.json())
     .then((data) =>setUsers(data))
 },[])

@@ -13,7 +13,7 @@ const BlogPost = () => {
     const blogInfo={name,texts,comment,like};
     console.log(blogInfo);
 
-    fetch(`http://localhost:5000/post_blog`,{
+    fetch(`https://kurenai-server-steel.vercel.app/post_blog`,{
       method: "POST",
       headers:{
         'content-type': 'application/json'

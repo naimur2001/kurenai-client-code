@@ -4,7 +4,7 @@ const Blog = () => {
   const [blogs,setBlogs]=useState([]);
 
 useEffect(()=>{
-  fetch(`http://localhost:5000/get_blog`)
+  fetch(`https://kurenai-server-steel.vercel.app/get_blog`)
     .then(res=>res.json())
     .then((data) =>setBlogs(data))
 },[])
